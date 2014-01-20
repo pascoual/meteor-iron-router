@@ -1,0 +1,538 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Iron Router</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1 style="color: white">Iron Router</h1>
+		<p style="color: white">Pascal Richier & Morea.fr</p>
+	</header>
+	<section class="slide cover" id="Cover"><div>
+		<h2 style="margin-top: -40px">Iron Router</h2>
+		<h2>Gestion d'URL avec Meteor</h2>
+		<p><strong>Présenté par Pascal Richier & <a href="http://www.morea.fr" style="border-bottom: none;">www.morea.fr</a></strong></p>
+		<img src="pictures/slide1.jpg" alt="">
+		<!--
+			To apply styles to the certain slides
+			set slide ID to get needed elements
+			-->
+		<style>
+			#Cover h2 {
+				margin:30px 0 0;
+				color:#FFF;
+				text-align:center;
+				font-size:70px;
+				}
+			#Cover p {
+				margin:10px 0 0;
+				text-align:center;
+				color:#FFF;
+				font-style:italic;
+				font-size:20px;
+				}
+				#Cover p a {
+					color:#FFF;
+					}
+		</style>
+	</div></section>
+	<section class="slide" id="menu"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top:-40px">Iron-Router : le GPS de Meteor.js</h2>
+		<ol>
+			<li>La petite histoire : Meteor-Router & Mini-Pages</li>
+            <li class="next">Installation</li>
+            <li class="next">Quelques routes</li>
+            <li class="next">Les paramètres</li>
+            <li class="next">Configuration</li>
+            <li class="next">Les chemins : pathFor & urlFor</li>
+            <li class="next">Des données pour vos templates</li>
+            <li class="next">Les layouts</li>
+            <li class="next">And... Action</li>
+            <li class="next">Factoriser</li>
+            <li class="next">Côté serveur</li>
+		</ol>
+	</div>
+    <style>
+        #menu ol li {
+            line-height: 40px;
+        }
+    </style>
+    </section>
+    
+	<section class="slide" id="history"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -50px; margin-left: 265px">Petite histoire</h2>
+        <div class="imagewithlegend">
+            <img src="pictures/Tom_Sacha.jpg" title="Meteor-Router" style="max-height: 220px; position: absolute; bottom: 85px; left: 50px; max-height: 330px;">
+            <div class="imagelegend" style="position: absolute; top: 110px; left: 70px"><h2>Meteor-Router</h2><p class="sticker">de Tom Coleman</p></div>
+            <p style="position: absolute; bottom: -15px; left: 80px; padding: 10px; color: #444; font-weight: bold;">Co-auteur de <i>Discover Meteor</i> avec Sacha Greif</p>
+        </div>
+        <div class="imagewithlegend">
+            <img src="pictures/ChrisMather.jpg" title="Mini-Pages" style="position: absolute; bottom: 95px; right: 50px; max-height: 330px;">
+            <div class="imagelegend" style="position: absolute; top: 110px; right: 90px"><h2>Mini-Pages</h2><p class="sticker">de Chris Mather</p></div>
+        </div>
+		<style>
+            .imagewithlegend img {
+                z-index:0;
+                position: relative;
+                border:1px solid #;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;  
+            }
+            .imagelegend {
+                position: relative;
+                z-index: 20;
+            }
+                
+            .sticker {
+                color: #FFF;
+                text-align:center;
+                font-weight: bold;
+                -moz-transform:rotate(-10deg);
+                -webkit-transform:rotate(-5deg); 
+                -o-transform:rotate(-10deg);
+                -ms-transform : rotate(-10deg);
+                padding: 0px 5px;
+                background-color: #333;
+                border:1px solid #;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px; 
+            }
+            .imagelegend h2 {
+                color: #60DB00;
+            }
+			#mongodb pre, #mongodb pre code {
+				font-size: 18px;
+                line-height: 39px;
+                max
+				}
+            #mongodb h2 {
+                margin-bottom: 20px;
+            }
+        </style>
+	</div></section>
+	<section class="slide" id="installation"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -50px">Installation</h2>
+        <pre style="margin-bottom: 45px">
+            <code>$ cd ./monProjet/
+$ mrt add iron-router</code>
+        </pre>
+        <h2 style="margin-bottom: 10px">Spécifier une version (optionnel)</h2>
+        <pre>
+            <code>/* Fichier : smart.json */</code>
+            <code>{</code>
+            <code>  "packages": {</code>
+            <code>    "iron-router": {</code>
+            <code>      "git": "https://github.com/EventedMind/iron-router.git",</code>
+            <code>      "branch": "dev"</code>
+            <code>    }</code>
+            <code>  }</code>
+            <code>}</code>
+        </pre>
+		<style>
+            #installation .slide p {
+                margin-bottom: 0px !important;
+            }
+			#installation pre, #installation pre code {
+				font-size: 18px;
+                line-height: 28px;
+            }
+        </style>
+	</div></section>
+    
+	<section class="slide" id="route"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>Le chemin</h2>
+        <p style="margin-top: -20px; margin-bottom: 25px">La route la plus basique</p>
+        <pre style="position: absolute; top: 310px; left: 120px;">
+            <code>Router.map( function () {</code>
+            <code>  this.route('<mark class="important">about</mark>');</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 250px; right: 200px">Nom : about<br>URL : /about<br>Template: about</p>
+		<style>
+			#route pre {
+                margin-top: -15px;
+            }
+			#route pre, #route pre code {
+				font-size: 24px;
+                line-height: 35px;
+				}
+        </style>
+	</div></section>
+    
+	<section class="slide" id="departementale"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>La départementale</h2>
+        <!--p style="margin-top: -20px; margin-bottom: 25px">Meilleur pour les amotisseurs</p-->
+        <pre style="position: absolute; top: 230px; left: 120px;font-size: 24px; line-height: 35px;">
+            <code>Router.map( function () {</code>
+            <code>  this.route('<mark class="important">home</mark>', {</code>
+            <code>    path: '/',</code>
+            <code class="next">    <mark class="important">template: 'home'</mark></code>
+            <code>  });</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 250px; right: 200px">Nom : home<br>URL : /<br>Template: home</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="parametres"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>Les paramètres</h2>
+        <pre style="position: absolute; top: 280px; left: 100px;font-size: 24px; line-height: 35px;">
+            <code>this.route('postDetail', {</code>
+            <code>  path: '/posts/:_id<mark class="important next">/:step?</mark>'</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 170px; right: 30px">Nom : postDetail<br>URL : /posts/anyString<span class="next"><br>URL : /posts/anyString<mark class="important">/edit</mark></span><br>Template: postDetail<br>this.params._id = anyString<span class="next"><br>this.params.step = <mark class="important">edit</mark></span></p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="parametresGlobbing"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>Les paramètres englobants</h2>
+        <pre style="position: absolute; top: 320px; left: 100px;font-size: 24px; line-height: 35px;">
+            <code>this.route('postNotFound', {</code>
+            <code>  path: '<mark class="important">/posts/*</mark>'</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 270px; right: 100px">Nom : postNotFound<br>URL : /posts/<mark class="important">a/b/c</mark><br>Template: postNotFound<br>this.params = ['<mark class="important">a/b/c</mark>']</p>
+        <p class="sticker next">Attention à l'ordre de déclaration des routes !</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="parametresGlobbingNamed"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>Les paramètres englobants (nommés)</h2>
+        <pre style="position: absolute; top: 280px; left: 100px;font-size: 24px; line-height: 35px;">
+            <code>this.route('anyFile', {</code>
+            <code>  path: '/files/<mark class="important">:file(*)</mark>'</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 230px; right: 100px">Nom : anyFile<br>URL : /files/<mark class="important">img/42.jpg</mark><br>Template: anyFile<br>this.params.<mark class="important">file</mark> = '<mark class="important">img/42.jpg</mark>'</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="parametresRegExp"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>Les paramètres RegExp</h2>
+        <pre style="position: absolute; top: 180px; left: 100px;font-size: 24px; line-height: 35px;">
+            <code>this.route('listPostsByDate', {</code>
+            <code>  path: /^\/posts\/date\/<mark class="important">(\d+)</mark>\-<mark class="important">(\d+)</mark>\-<mark class="important">(\d+)</mark>/</code>
+            <code>});</code>
+        </pre>
+        <p style="font-size: 32px; position: absolute; top: 290px; right: 100px">Nom : listPostsByDate<br>URL : /posts/date/<mark class="important">2013-03-23</mark><br>Template: listPostsByDate<br>this.params = <mark class="important">["2013", "03", "23"]</mark></p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="notFound"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2>NotFound & loading</h2>
+        <p><strong>NotFound</strong> : template appelé lorsque le chemin demandé n'existe pas ou lorsque la fonction data renvoie <i>null</i></p>
+        <p style="margin-top: -50px"><strong>Loading</strong> : template rendu pendant le chargement des données (voir waitOn)</p>
+        <pre style="position: absolute; top: 390px; left: 300px;font-size: 24px; line-height: 35px;">
+            <code><mark class="important">Router.configure</mark>({</code>
+            <code>  <mark class="important">notFoundTemplate:</mark> 'notFound'</code>
+            <code>  <mark class="important">loadingTemplate:</mark> 'loading'</code>
+            <code>});</code>
+        </pre>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="path"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -70px">Obtenir les chemins</h2>
+        <pre style="position: absolute; top: 110px; left: 200px;font-size: 22px; line-height: 35px;">
+            <code>&lt;nav></code>
+            <code>  &lt;a href="{{ <mark class="important">pathFor</mark> 'about' }}">About</a></code>
+            <code>  &lt;a href="{{ <mark class="important">urlFor</mark> 'imprint' }}">Imprint</a></code>
+            <code>&lt;/nav></code>
+        </pre>
+		<h2 style="position: absolute; top: 320px; left: 120px;">En javascript</h2>
+        <pre style="position: absolute; top: 380px; left: 200px;font-size: 22px; line-height: 35px;">
+            <code>// returns '/posts/1'</code>
+            <code><mark class="important">Router.routes</mark>['postDetail'].<mark class="important">path</mark>(<mark class="important">{_id: 1}</mark>);</code>
+            <code>// returns 'http://localhost:3000/posts/1'</code>
+            <code><mark class="important">Router.routes</mark>['postDetail'].<mark class="important">url</mark>(<mark class="important">{_id: 1}</mark>);</code>
+        </pre>
+        <p class="sticker next" style="font-size: 32px; position: absolute; top: 80px; left: 400px">variables : contexte du template</p>
+        <p class="sticker next" style="font-size: 32px; position: absolute; top: 345px; left: 500px">variables : en paramètres</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="data"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -15px">Des données pour vos templates</h2>
+        <pre style="position: absolute; top: 170px; left: 200px; font-size: 22px;">
+            <code>this.route('authorDetail', {</code>
+            <code>  path: '/authors/:_id',</code>
+            <code>  <mark class="important">notFoundTemplate:</mark> 'authorNotFound',</code>
+            <code>  <mark class="important">data:</mark> <mark class="important">function()</mark> {</code>
+            <code>    <mark class="important">return</mark> Authors.findOne({_id: this.params._id});</code>
+            <code>  }</code>
+            <code>});</code>
+        </pre>
+        <p class="sticker next" style="font-size: 32px; position: absolute; top: 445px; left: 350px">{{firstName}}, {{lastName}}, ...<br>dans le contexte du template</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="datas"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -15px">Plus de données</h2>
+        <pre style="position: absolute; top: 170px; left: 200px; font-size: 22px;">
+            <code>this.route('authors', {</code>
+            <code>  <mark class="important">waitOn:</mark> function() {</code>
+            <code>    return Meteor.subscribe('authorList');</code>
+            <code>  },</code>
+            <code>  data: function () {</code>
+            <code>    templateData = { authors: <mark class="important">Authors.find()</mark> };</code>
+            <code>    <mark class="important">return templateData;</mark></code>
+            <code>  }</code>
+            <code>});</code>
+        </pre>
+        <p class="sticker next" style="width:140px; position:absolute;top:320px; left: 380px">ready()</p>
+        <p class="sticker next" style="width:250px; position:absolute;top:535px; left: 380px">{{#each authors}}</p>
+		<style>
+        </style>
+	</div></section>
+    
+	<section class="slide" id="layout"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -15px; margin-left: 300px">Layout</h2>
+        <pre style="position: absolute; top: 160px; left: 100px; font-size: 18px; line-height:5px"><h2>Template</h2>
+            <code>&lt;template name="complexLayout"></code>
+            <code>  &lt;div class="left"></code>
+            <code>    {{<mark class="important">yield "menu"</mark>}}</code>
+            <code>  &lt;/div></code>
+            <code>  &lt;div class="main"></code>
+            <code>    {{<mark class="important">yield</mark>}}</code>
+            <code>  &lt;/div></code>
+            <code>  &lt;div class="bottom"></code>
+            <code>    {{<mark class="important">yield "footer"</mark>}}</code>
+            <code>  &lt;/div></code>
+            <code>&lt;/template></code>
+        </pre>
+        <pre style="position: absolute; top: 160px; right: 50px; font-size: 18px;"><h2>Route</h2>
+            <code>this.route('home', {</code>
+            <code>  path: '/',</code>
+            <code>  <mark class="important">layoutTemplate:</mark> 'complexLayout',</code>
+            <code>  <mark class="important">yieldTemplates:</mark> {</code>
+            <code>    'myMenu': {<mark class="important">to: 'menu'</mark>},</code>
+            <code>    'myFooter': {<mark class="important">to: 'footer'</mark>}</code>
+            <code></code>
+            <code>  }</code>
+            <code>});</code>
+        </pre>
+		<style>
+            #layout pre code {
+                line-height: 28px;
+            }
+            pre h2 {
+                font-size: 38px !important;
+                color: #307777 !important;
+            }
+        </style>
+	</div></section>
+    
+	<section class="slide" id="action"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -50px; margin-left: 80px">Action</h2>
+        <img src="pictures/action.jpg" style="max-width: 60px; position: absolute; top:40px" title="action">
+        <pre style="position: absolute; top: 130px; left: 200px; font-size: 20px;">
+            <code>this.route('home', {</code>
+            <code>  path: '/',</code>
+            <code>  layoutTemplate: 'complexLayout',</code>
+            <code>  <mark class="important">action: function()</mark> {</code>
+            <code>    // this is an instance of RouteController</code>
+            <code>    // access to:</code>
+            <code>    //  this.params</code>
+            <code>    //  this.wait</code>
+            <code>    //  this.render</code>
+            <code>    //  this.stop</code>
+            <code>    //  this.redirect</code>
+            <code>    this.render('myMenu', {to: 'menu'});</code>
+            <code>    this.render('myFooter', {to: 'footer'});</code>
+            <code>    this.render('home');</code>
+            <code>  }</code>
+            <code>});</code>
+        </pre>
+		<style>
+            #action pre code {
+                line-height: 28px;
+            }
+        </style>
+	</div></section>
+    
+	<section class="slide" id="factoriser"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -100px; margin-left: 80px">Factoriser avec deux contrôleurs</h2>
+        <pre style="position: absolute; top: 80px; left: 200px; font-size: 16px;">
+            <code><mark class="important">BaseController</mark> = <mark class="important">RouteController.extend</mark>({</code>
+            <code>  // code commun entre tous mes contrôleurs</code>
+            <code>});</code>
+            <code>&nbsp;</code>
+            <code><mark class="important">this.route</mark>('myDocuments', {</code>
+            <code>  path: '/documents',</code>
+            <code>  controller: <mark class="important">'MyDocumentsController'</mark></code>
+            <code>});</code>
+            <code>&nbsp;</code>
+            <code><mark class="important">MyDocumentsController</mark> = <mark class="important">BaseController.extend</mark>({</code>
+            <code>  layoutTemplate: 'baseLayout',</code>
+            <code>  yieldTemplates: {</code>
+            <code>    'userMenu': {to: 'menu'}</code>
+            <code>  },</code>
+            <code>  waitOn: function() {return Meteor.subscribe('waitingFor');},</code>
+            <code>  data: function () {</code>
+            <code>    data = { waitingFor : AllwaysLate.find() };</code>
+            <code>    return data;</code>
+            <code>  },</code>
+            <code>  <mark class="important">before</mark>: function(){},</code>
+            <code>  <mark class="important">after</mark>: function(){},</code>
+            <code>  <mark class="important">unload</mark>: function(){},</code>
+            <code>  action: function(){</code>
+            <code>    this.render();</code>
+            <code>  }</code>
+            <code>});</code>
+        </pre>
+        <p class="sticker next" style="width:100px; position:absolute;top:180px; left: 590px">eval</p>
+        <p class="sticker next" style="width:350px; position:absolute;top:430px; left: 450px"><i>before</i> & <i>after</i> la fonction <i>action</i></p>
+        <p class="sticker next" style="width:450px; position:absolute;top:480px; left: 450px"><i>unload</i> &rArr; une autre route est demandée</p>
+		<style>
+            #factoriser pre code {
+                line-height: 20px;
+            }
+        </style>
+	</div></section>
+    
+	<section class="slide" id="server"><div>
+        <img src="pictures/morea.jpg" class="imgmorea">
+        <p class="imgmorea">Conception et infogérance d’infrastructures critiques</p>
+		<h2 style="margin-top: -35px">Côté serveur</h2>
+        <pre style="position: absolute; top: 150px; left: 200px; font-size: 22px;">
+            <code>Router.map(function () {</code>
+            <code>  this.route('upload', {</code>
+            <code>    <mark class="important">where: 'server'</mark>,</code>
+            <code>    action: function () {</code>
+            <code>      var request = <mark class="important">this.request</mark>;</code>
+            <code>      var response = <mark class="important">this.response</mark>;</code>
+            <code>      // votre code</code>
+            <code>      response.end('pong');</code>
+            <code>      // ou</code>
+            <code>      <mark class="important">this.next()</mark>;</code>
+            <code>    }</code>
+            <code>  });</code>
+            <code>});</code>
+        </pre>
+        <p class="sticker next" style="width:100px; position:absolute;top:460px; left: 450px">Ou pas !</p>
+        <p class="sticker next" style="width:400px; position:absolute;top:95px; left: 590px">Sans Iron-Router : chercher <br>WebApp.connectHandlers ou <br>__meteor_bootstrap__.app</p>
+		<style>
+            #server pre code {
+                line-height: 35px;
+            }
+        </style>
+	</div></section>
+    <section class="slide" id="morea"><div>
+        <img src="pictures/morea.jpg">
+        <p class="moreapitch">Pour héberger vos applications Meteor critiques</p>
+        <p class="moreaprez"><a href="http://www.morea.fr" target="_blank">MOREA</a> vous accompagne dès la conception de votre architecture technique jusqu’à l’infogérance de vos services ou applications critiques. Morea travaille principalement avec des technologies Open Source.<br>Ils font confiance à Morea :</p>
+        <img src="pictures/morea_clients.jpg" style="height: 55%; margin-left:120px; margin-top: -50px">
+        <style>
+            #morea img {
+                margin-top: -60px;
+                margin-bottom: -75px;
+                margin-left: 0px
+            }
+            #morea .moreaprez {
+                font-size: 17px;
+                margin-top: -30px;
+                margin-left: 10px
+            }
+            #morea p.moreapitch {
+                font-size: 35px;
+                margin-top: -20px;
+                margin-left: 10px
+            }
+        </style>
+	</div></section>
+	<section class="slide cover" id="Picture"><div>
+		<h2>Merci !</h2>
+		<img src="pictures/slide14.jpg" alt="">
+        
+        <p class="sourceLinks">Thanks to <a href="http://manuel-schoebel.com/" target="_blank">manuel-schoebel.com</a> for his articles !</p>
+		<style>
+			#Picture h2 {
+				color:#FFF;
+                position: absolute;
+                bottom: 185px;
+                right: 140px;
+            }
+            img.imgmorea {
+                position: absolute;
+                width: 180px;
+                bottom: 5px;
+                right: 20px
+            }
+            p.imgmorea {
+                position: absolute;
+                bottom: -50px;
+                right: 20px;
+                font-size: 20px;
+            }
+            .sourceLinks {
+                font-size: 20px;
+                color: white;
+                background-color: #000;
+                border-radius: 10px; 
+                -moz-border-radius: 10px; 
+                -webkit-border-radius: 10px;
+                border: 10px solid #000;
+                opacity: 0.55; 
+                position: absolute;
+                bottom: -30px;
+                right: 20px
+            }
+		</style>
+	</div></section>
+	<p class="badge"><a href="http://www.morea.fr"><strong>www.morea.fr</strong></a></p>
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="shower/shower.min.js"></script>
+	<!-- Copyright © 2013 Pascal Richier, Easy Paddock SAS. -->
+</body>
+</html>
